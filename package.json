@@ -1,0 +1,31 @@
+{
+  "name": "pnpm-svelte-typescript-stack-boilerplate",
+  "private": true,
+  "homepage": "https://github.com/teemukoivisto/pnpm-svelte-typescript-stack-boilerplate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teemukoivisto/pnpm-svelte-typescript-stack-boilerplate.git"
+  },
+  "type": "module",
+  "scripts": {
+    "db:reset": "./packages/db/reset-heroku.sh",
+    "format": "pnpm run format -r",
+    "lint:fix": "eslint --ignore-path .gitignore --fix --ext .js,.cjs,.ts,.tsx,.svelte .",
+    "client": "pnpm run dev --filter @myapp/client",
+    "start": "concurrently --kill-others 'pnpm run watch --filter @myapp/api' 'pnpm run watch --filter @myapp/shared' 'pnpm run dev --filter @myapp/client' 'pnpm run dev --filter @myapp/api'"
+  },
+  "engines": {
+    "node": ">=12",
+    "pnpm": ">=6.0.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.17.0",
+    "@typescript-eslint/parser": "^5.17.0",
+    "concurrently": "^7.1.0",
+    "eslint": "^8.12.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
+  }
+}

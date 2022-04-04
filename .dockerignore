@@ -1,0 +1,7 @@
+db/data/
+**node_modules
+**dist
+**tmp
+**.svelte-kit
+**generated
+**.env

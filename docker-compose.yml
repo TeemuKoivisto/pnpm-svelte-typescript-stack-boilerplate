@@ -1,0 +1,42 @@
+version: '3.7'
+
+services:
+  reverse_proxy:
+    build:
+      context: ./local-reverse-proxy
+    ports:
+      - 9080:80
+    restart: always
+  myapp_client:
+    build:
+      context: .
+      dockerfile: packages/client/Dockerfile
+    restart: always
+  myapp_api:
+    build:
+      context: .
+      dockerfile: packages/api/Dockerfile
+    ports:
+      - 9600:8600
+    environment:
+      NODE_ENV: production
+      PORT: 8600
+      LOG_LEVEL: info
+      JWT_SECRET: verylongrandomstring
+      DATABASE_URL: postgresql://pg-user:my-pg-password@host.docker.internal:5600/my_postgres_db?schema=public
+    restart: always
+  postgres:
+    image: postgres:13.4-alpine
+    ports:
+      - 5600:5432
+    environment:
+      POSTGRES_PASSWORD: my-pg-password
+      POSTGRES_USER: pg-user
+      POSTGRES_DB: my_postgres_db
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+    restart: always
+
+networks:
+  default:
+    name: my-app-local
